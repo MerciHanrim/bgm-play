@@ -903,7 +903,7 @@
      ════════════════════════════════════════════════════════════ */
 
   var HEIGHT_SINGLE    = 480;
-  var HEIGHT_MULTI     = 570;
+  var HEIGHT_MULTI     = 610;
   var HEIGHT_COLLAPSED = 64;
 
   var DEFAULT_TITLE = 'Background Music';
@@ -1048,12 +1048,13 @@
   /*
     desiredHeight()
 
-    현재 상태에 따라 iframe이 가져야 할 높이를 반환합니다.
-    접힌 상태면 64px, 펼친 상태에서는 트랙 수에 따라 480/530px를 사용합니다.
+    현재 플레이어의 실제 높이를 측정해 반환합니다.
+    고정값 대신 DOM 기준으로 측정하므로 콘텐츠가 바뀌어도 정확하게 맞습니다.
   */
   function desiredHeight() {
     if (state.collapsed) return HEIGHT_COLLAPSED;
-
+    var player = document.getElementById('mjp');
+    if (player) return player.scrollHeight;
     return state.tracks.length >= 2 ? HEIGHT_MULTI : HEIGHT_SINGLE;
   }
 
