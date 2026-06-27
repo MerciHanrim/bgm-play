@@ -406,10 +406,11 @@
 
   #tracklist {
     display: none;
-    max-height: 154px;
+    max-height: 216px;
     overflow-y: auto;
     background: rgba(59,31,14,.025);
     border-top: 1px solid var(--line);
+    padding-top: 6px;
     scrollbar-width: thin;
     scrollbar-color: rgba(107,66,38,.35) transparent;
   }
@@ -453,9 +454,20 @@
     border-left-color: var(--coffee2);
   }
 
+  /* 현재 재생 중 곡명 앞에 ▶ 표시 */
+  .track-item.active .track-name::before {
+    content: '▶';
+    font-size: 6px;
+    color: var(--coffee2);
+    margin-right: 5px;
+    vertical-align: middle;
+    position: relative;
+    top: -1px;
+  }
+
   .track-num {
     font-size: 10px;
-    color: rgba(62,39,35,.30);
+    color: rgba(62,39,35,.22);
     letter-spacing: .08em;
     font-weight: 700;
     text-align: right;
@@ -891,7 +903,7 @@
      ════════════════════════════════════════════════════════════ */
 
   var HEIGHT_SINGLE    = 480;
-  var HEIGHT_MULTI     = 530;
+  var HEIGHT_MULTI     = 570;
   var HEIGHT_COLLAPSED = 64;
 
   var DEFAULT_TITLE = 'Background Music';
