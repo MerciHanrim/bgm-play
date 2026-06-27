@@ -1127,6 +1127,11 @@
 
     var val = safeDecode(String(value)).trim();
 
+    /* 티스토리 에디터가 URL을 이중 인코딩하는 경우 한 번 더 디코딩 */
+    if (val && !(/^https?:\/\//i.test(val)) && /%[0-9A-Fa-f]{2}/.test(val)) {
+      val = safeDecode(val).trim();
+    }
+
     if (!val) return '';
 
     if (/^https?:\/\//i.test(val)) return val;
