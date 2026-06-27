@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BGM Player TT — 동작 확인 테스트</title>
+<style>
+  body {
+    margin: 0; padding: 40px 20px;
+    background: #f5f0eb;
+    font-family: sans-serif;
+    color: #3b1f0e;
+  }
+  h1 { font-size: 16px; margin-bottom: 6px; }
+  p  { font-size: 12px; color: #9c7a66; margin-bottom: 24px; }
+
+  .player-box {
+    display: inline-block;
+  }
+  .player-box iframe {
+    display: block;
+    border: none;
+  }
+
+  #log {
+    margin-top: 24px;
+    font-size: 11px;
+    color: #6b4226;
+    background: #fff8f2;
+    border: 1px solid #ddd3ca;
+    border-radius: 6px;
+    padding: 10px 14px;
+    max-width: 270px;
+    line-height: 1.8;
+  }
+  #log strong { display: block; margin-bottom: 4px; color: #3b1f0e; }
+</style>
+</head>
+<body>
+
+<h1>BGM Player TT v1.0 — 동작 확인</h1>
+<p>
+  음악·이미지: mjcafe-code.github.io/bgm-play/<br>
+  확인 항목: 로드 / 2트랙 파싱 / 재생 / 커버 전환 / 트랙리스트 / postMessage 높이
+</p>
+
+<div class="player-box">
+  <iframe
+    id="tt-frame"
+    src="https://mercihanrim.github.io/bgm-play/bgm-player-TT.html?data=https%3A%2F%2Fmjcafe-code.github.io%2Fbgm-play%2FHAUSER-Albinoni_Adagio.m4a%7CAlbinoni%20Adagio%20%2F%20HAUSER%7Chttps%3A%2F%2Fmjcafe-code.github.io%2Fbgm-play%2FHAUSER-03_500pix.png%7C%7Chttps%3A%2F%2Fmjcafe-code.github.io%2Fbgm-play%2FThe_Beatles-Let_It_Be.m4a%7CLet%20It%20Be%20%2F%20The%20Beatles%7Chttps%3A%2F%2Fmjcafe-code.github.io%2Fbgm-play%2FThe_Beatles-1024pix.png"
+    width="270"
+    height="530"
+    frameborder="0"
+    scrolling="no">
+  </iframe>
+</div>
+
+<div id="log">
+  <strong>postMessage 로그</strong>
+  <span id="log-body">대기 중...</span>
+</div>
+
+<script>
+/* postMessage 수신 — 높이 조절 + 로그 */
+window.addEventListener('message', function(e) {
+  var d = e.data;
+  if (!d || !d.type) return;
+
+  var frame = document.getElementById('tt-frame');
+  var log   = document.getElementById('log-body');
+
+  if (d.type === 'bgm-resize') {
+    frame.style.height = d.height + 'px';
+    log.textContent = 'bgm-resize → ' + d.height + 'px ✔';
+  } else if (d.type === 'cafe-bgm-play') {
+    log.textContent = 'cafe-bgm-play ✔ (재생 신호 수신)';
+  } else if (d.type === 'cafe-bgm-pause') {
+    log.textContent = 'cafe-bgm-pause ✔ (정지 신호 수신)';
+  }
+});
+</script>
+
+</body>
+</html>
